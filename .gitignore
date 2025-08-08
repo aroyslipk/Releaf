@@ -1,3 +1,21 @@
+# Created by https://www.toptal.com/developers/gitignore/api/java,gradle,intellij,eclipse,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,gradle,intellij,eclipse,visualstudiocode
+
+### Caching ###
+.gradle/
+build/
+
+### Gradle ###
+# Ignore Gradle GUI config
+.gradletasknamecache
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle/wrapper/gradle-wrapper.jar
+
+# Ignore Gradle build information
+.gradle-build-info/
+
+### Java ###
 # Compiled class file
 *.class
 
@@ -22,3 +40,20 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+### IntelliJ ###
+# Covers IDEA's system files, Gradle's files and folders, and CMake's files and folders
+.idea/
+*.iml
+*.iws
+out/
+
+### Eclipse ###
+.settings/
+.classpath
+.project
+
+### VS Code ###
+.vscode/
+
+# End of https://www.toptal.com/developers/gitignore/api/java,gradle,intellij,eclipse,visualstudiocode
