@@ -50,7 +50,6 @@
 - Apache Tomcat 10+
 - MySQL 8+
 - Gradle 7+
-- Modern web browser (Chrome, Edge, Firefox)
 
 ---
 
@@ -62,24 +61,22 @@
     cd Releaf
     ```
 
-2.  **Database Setup**
-    -   আপনার MySQL সার্ভারে একটি নতুন ডাটাবেজ তৈরি করুন:
-        ```sql
-        CREATE DATABASE releaf_db;
-        ```
-    -   প্রজেক্টের সোর্স কোডে ডাটাবেজ কানেকশনের কনফিগারেশন আপডেট করুন (যেমন: একটি `DBConnection.java` বা অনুরূপ ইউটিলিটি ক্লাসে আপনার username এবং password দিন)।
+## ⚙️ Setup and Deployment Instructions
 
-3.  **Build the Application**
-    -   Gradle ব্যবহার করে প্রজেক্টটিকে একটি `.war` ফাইলে বিল্ড করুন:
-        ```bash
-        ./gradlew build
-        ```
-    -   বিল্ড সফল হলে, আপনি `build/libs/` ফোল্ডারের ভেতরে `Releaf.war` (বা অনুরূপ নামের) একটি ফাইল পাবেন।
+1. Database Setup
+Create a new MySQL database named `releaf_db` by running the following SQL command in your MySQL server:
+```
+CREATE DATABASE releaf_db;
+```
+2. Build the Application
+Use Gradle to build the project into a deployable .war file by running the following command in the project root directory:
+```
+./gradlew build
+```
+  After a successful build, the .war file (e.g., Releaf.war) will be available inside the build/libs/ folder.
 
-4.  **Deploy to Tomcat**
-    -   জেনারেট হওয়া `.war` ফাইলটি আপনার Apache Tomcat সার্ভারের `webapps` ডিরেক্টরিতে কপি করে দিন।
-    -   Tomcat সার্ভারটি স্টার্ট করুন। এটি স্বয়ংক্রিয়ভাবে অ্যাপ্লিকেশনটি ডেপ্লয় করে নেবে।
-
-5.  **Access the App**
-    -   আপনার ব্রাউজারে নিচের ঠিকানায় যান:
-        **`http://localhost:8080/Releaf/`** (আপনার `.war` ফাইলের নামের উপর নির্ভর করে URL পরিবর্তন হতে পারে)
+3. Access the Application
+Open your web browser and navigate to: ( for localhost )
+```
+http://localhost:8080/Releaf/
+```
