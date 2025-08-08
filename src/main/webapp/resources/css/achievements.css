@@ -1,0 +1,196 @@
+.achievement-card {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.achievement-card.unlocked {
+    background: var(--success);
+    color: white;
+}
+
+.achievement-card.locked {
+    background: var(--light-gray);
+    color: var(--gray);
+}
+
+.achievement-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.progress-section {
+    margin-bottom: 2rem;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.progress-title {
+    color: var(--dark-green);
+    font-weight: 500;
+}
+
+.progress-text {
+    color: var(--gray);
+}
+
+.xp-info {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.topic-card {
+    background: var(--light-green);
+    padding: 1.5rem;
+    border-radius: 5px;
+}
+
+.topic-title {
+    color: var(--dark-green);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.topic-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.topic-label {
+    color: var(--dark-gray);
+}
+
+.topic-count {
+    color: var(--dark-green);
+    font-weight: bold;
+}
+
+.completion-badge {
+    background: var(--success);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    display: inline-block;
+}
+
+.motivational-section {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.motivational-title {
+    color: var(--dark-green);
+    margin-bottom: 1rem;
+}
+
+.motivational-text {
+    color: var(--gray);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.button-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.topic-completion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.reward-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.topic-completion {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.reward-card {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.reward-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.reward-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+}
+
+.reward-description {
+    margin: 0;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.reward-requirement {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.3);
+}
+
+.milestone-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.milestone-card {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 5px;
+}
+
+.milestone-card[data-completed="true"] {
+    background: var(--light-green);
+}
+
+.milestone-card[data-completed="false"] {
+    background: var(--light-gray);
+}
+
+.milestone-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.milestone-title {
+    color: var(--dark-green);
+    margin-bottom: 0.5rem;
+}
+
+.milestone-description {
+    color: var(--gray);
+    margin: 0;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,27 @@
+### Application Properties ###
+application.properties
+
+### Compiled Files ###
+/target/
+/build/
+*.class
+
+### Logs ###
+*.log
+logs/
+
+### IDE Files ###
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+### User Uploads ###
+/user-photos/
+/uploads/
+
+### OS Files ###
+.DS_Store
+Thumbs.db
