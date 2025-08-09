@@ -11,7 +11,6 @@
 
 **🌱 _Releaf_** – A JSP-based eco-task web app where you unlock topics, complete green challenges, earn points, and track your impact. 🏆
 
-
 ---
 
 ## 🖥️ Tech Stack
@@ -29,7 +28,7 @@
 
 ---
 
-## ✨ Features
+## ✨ Features:
 
 ### 👤 User Features
 - User registration & login (secure session management)
@@ -46,7 +45,7 @@
 
 ---
 
-## 📦 Requirements
+## 📦 Requirements:
 - Java 17+ (JDK)
 - Apache Tomcat 10+
 - MySQL 8+
@@ -54,7 +53,7 @@
 
 ---
 
-## ⚙️ Installation & Setup
+## ⚙️ Installation & Setup:
 
 1.  **Clone the repository**
     ```bash
