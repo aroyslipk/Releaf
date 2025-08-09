@@ -56,6 +56,9 @@ out/
 ### VS Code ###
 .vscode/
 
+# Ignore sensitive config
+src/main/resources/application.properties
+
 
 
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,intellij,eclipse,visualstudiocode
