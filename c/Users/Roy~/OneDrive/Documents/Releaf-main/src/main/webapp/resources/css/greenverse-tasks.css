@@ -1,0 +1,62 @@
+/* Replace the :root section with lighter variables */
+:root {
+    --primary-green: #2E7D32;
+    --dark-green: #1B5E20;
+    --light-green: #E8F5E8;
+    --accent-color: #FFC107;
+    --text-dark: #2C3E50;
+    --text-light: #ffffff;
+    --bg-main: #f8f9fa;
+    --bg-card: #ffffff;
+    --border-color: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Simplify stat cards */
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.stat-icon-wrapper {
+    background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+}
+
+/* Simplify topic cards */
+.topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.topic-header {
+    background: linear-gradient(135deg, var(--light-green), #ffffff);
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.topic-header:hover {
+    background: linear-gradient(135deg, #d4edda, #ffffff);
+}

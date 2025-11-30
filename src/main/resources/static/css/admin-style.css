@@ -1,0 +1,293 @@
+/*
+ * Releaf Admin Panel Custom Stylesheet
+ */
+
+:root {
+    --primary-green: #4CAF50;
+    --dark-green: #388E3C;
+    --light-green: #C8E6C9;
+    --accent-color: #FFC107;
+    --text-color: #212529;
+    --light-text-color: #6c757d;
+    --background-color: #f8f9fa;
+    --white: #ffffff;
+    --border-color: #dee2e6;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: var(--primary-green);
+    color: var(--white);
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: var(--dark-green);
+    text-align: center;
+}
+
+.releaf-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.releaf-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 2px solid var(--light-green);
+}
+
+.releaf-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.releaf-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.releaf-subtitle {
+    font-size: 0.9em;
+    color: var(--light-green);
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--light-green);
+}
+
+#sidebar ul p {
+    color: var(--white);
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 15px;
+    font-size: 1.1em;
+    display: block;
+    color: var(--white);
+    text-decoration: none;
+    transition: background-color 0.2s, padding-left 0.2s;
+}
+
+#sidebar ul li a:hover {
+    background: var(--dark-green);
+    padding-left: 25px;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    background: var(--dark-green);
+}
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 25px;
+    background: linear-gradient(to right, var(--primary-green), var(--dark-green));
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: none;
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+    color: var(--white);
+    transition: color 0.3s ease-in-out;
+    position: relative;
+    text-decoration: none;
+}
+
+.navbar .nav-link:hover {
+    color: var(--white);
+}
+
+.navbar .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--accent-color);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.navbar .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.btn-primary {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-green);
+    border-color: var(--dark-green);
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: var(--primary-green);
+    color: var(--white);
+    border-bottom: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card-header h1,
+.card-header h2,
+.card-header h3,
+.card-header p,
+.card-header span {
+    color: var(--white) !important;
+}
+
+
+.card-header h2, .card-header h3, .card-header p {
+    color: var(--white) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    margin: 0;
+}
+
+.table {
+    background-color: var(--white);
+}
+
+.table thead th {
+    border-bottom: 2px solid var(--border-color);
+    color: var(--dark-green);
+}
+
+.table tbody tr:hover {
+    background-color: var(--light-green);
+}
+
+.form-control:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+}
+
+.text-primary {
+    color: var(--primary-green) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary-green) !important;
+}
+
+/* Text visibility utilities */
+.text-white {
+    color: var(--white) !important;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* GreenVerse Task Management specific styles for text visibility */
+.task-filters-box *,
+.task-list-box * {
+    color: #212529 !important; /* Dark text for visibility */
+}
+/* ===== Fix for green header/box text visibility ===== */
+.green-box,
+.panel-heading,
+.box-header {
+    background-color: var(--primary-green) !important;
+    color: var(--white) !important;
+}
+
+.green-box *,
+.panel-heading *,
+.box-header * {
+    color: var(--white) !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.25); /* extra visibility */
+}
+
+/* === Force white text on green header/boxes === */
+.green-box, 
+.green-box *, 
+.panel-heading, 
+.panel-heading *, 
+.box-header, 
+.box-header * {
+    color: #fff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4); /* better visibility */
+}
+
+/* Force text visible inside green header bars */
+.card-header, 
+.card-header *, 
+.panel-heading, 
+.panel-heading *, 
+.table-header, 
+.table-header * {
+    color: #fff !important;
+    font-weight: 600;
+}
+
+/* If input/search bar is inside green header, keep it readable */
+.card-header input,
+.panel-heading input {
+    color: #212529 !important;
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+}
+
+/* Styles for the admin user box in the navbar */
+.admin-user-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 25px;
+    transition: background-color 0.3s;
+}
+
+.admin-user-box:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.admin-user-box .nav-link {
+    color: var(--white) !important;
+    padding: 5px 10px;
+}

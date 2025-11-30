@@ -1,0 +1,37 @@
+/* Header / Navbar styles for user area */
+.user-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:12px 20px;
+  background: linear-gradient(90deg,#20323a 0%, #2b4a36 100%);
+  color:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,0.12);
+  position:relative;
+  z-index:50;
+}
+.user-header .logo-container{display:flex;align-items:center;gap:10px}
+.user-header .logo{height:40px;width:auto;border-radius:6px}
+.user-header .logo-text{font-weight:700;font-size:18px;color:#ffffff}
+.user-header .main-nav{display:flex;align-items:center;gap:8px;margin-left:12px}
+.user-header .nav-link{color:#d3e0df;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;transition:all .12s ease}
+.user-header .nav-link:hover{background:rgba(255,255,255,0.06);color:#fff}
+.user-header .nav-link.active{background:#1f8a4a;color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,0.08)}
+.user-header .user-menu{display:flex;align-items:center;gap:12px}
+.user-header .user-info{display:flex;flex-direction:column;align-items:flex-end;font-size:13px;color:#d7e6de}
+.user-header .username{font-weight:600}
+.user-header .xp-points{font-size:12px;opacity:.9}
+.profile-dropdown{position:relative}
+.profile-dropdown .avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;cursor:pointer;border:2px solid rgba(255,255,255,0.12)}
+.profile-dropdown .dropdown-content{position:absolute;right:0;top:52px;background:#ffffff;color:#222;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.12);display:none;min-width:160px;overflow:hidden}
+.profile-dropdown:hover .dropdown-content{display:block}
+.profile-dropdown .dropdown-content a{display:block;padding:10px 12px;color:#222;text-decoration:none}
+.profile-dropdown .dropdown-content a:hover{background:#f4f6f7}
+
+/* Responsive */
+@media (max-width:900px){
+  .user-header{flex-wrap:wrap;padding:10px}
+  .user-header .main-nav{order:3;width:100%;justify-content:flex-start;gap:6px;padding-top:8px}
+  .user-header .user-info{display:none}
+}

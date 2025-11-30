@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    // Use Gradle Java toolchain to request Java 21 for compilation and runtime
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    // Keep explicit source/target compatibility for tools that read it
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'com.h2database:h2'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // JSP Support (correct version for Spring Boot 3.x and Tomcat 10.x)
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+    
+    // Caching dependencies
+    implementation 'org.hibernate.orm:hibernate-jcache:6.2.13.Final'
+    implementation 'org.ehcache:ehcache:3.10.8'
+    
+    // Additional utilities
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    
+    // Email support
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    
+    // Jackson for JSON processing
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    
+    // DevTools for hot reloading and automatic restart
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+

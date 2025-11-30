@@ -1,0 +1,12 @@
+-- Insert FunLab tasks
+INSERT INTO tasks (topic, level, description, task_type, impact, proof_type, xp_reward, created_at, updated_at) VALUES
+('FunLab', 'Easy', 'Solve an eco-themed puzzle or riddle. Share a screenshot of your completed puzzle with the riddle text included.', 'FUNLAB', 'Enhances environmental awareness through problem-solving', 'PHOTO', 20, NOW(), NOW()),
+('FunLab', 'Easy', 'Take a photo of something green in your environment - a plant, tree, or any natural green element.', 'FUNLAB', 'Increases appreciation for natural elements in daily life', 'PHOTO', 20, NOW(), NOW()),
+('FunLab', 'Easy', 'Record a 1-minute audio message about what Earth means to you and why we should protect it.', 'FUNLAB', 'Encourages personal reflection on environmental values', 'AUDIO', 20, NOW(), NOW()),
+('FunLab', 'Medium', 'Go on an eco-spy hunt at home! Find and list 5 items that are eco-friendly or could be replaced with greener alternatives.', 'FUNLAB', 'Raises awareness of sustainable choices in daily life', 'TEXT', 20, NOW(), NOW()),
+('FunLab', 'Medium', 'Create a DIY craft using recycled materials. Turn trash into treasure!', 'FUNLAB', 'Demonstrates creative reuse and reduces waste', 'PHOTO', 20, NOW(), NOW()),
+('FunLab', 'Medium', 'Go on a green word hunt! Find words related to nature, environment, or sustainability in books, magazines, or online.', 'FUNLAB', 'Builds environmental vocabulary and awareness', 'TEXT', 20, NOW(), NOW()),
+('FunLab', 'Hard', 'Teach a friend or family member about one eco-friendly habit. Record a short video or take a selfie during the teaching session.', 'FUNLAB', 'Spreads environmental knowledge to others', 'VIDEO', 20, NOW(), NOW()),
+('FunLab', 'Hard', 'Create an eco-themed meme that promotes environmental awareness. Make it funny and shareable!', 'FUNLAB', 'Uses humor to spread environmental messages', 'PHOTO', 20, NOW(), NOW()),
+('FunLab', 'Easy', 'Find an inspiring environmental quote and create a beautiful presentation of it - either digital or handwritten.', 'FUNLAB', 'Inspires through environmental wisdom', 'PHOTO', 20, NOW(), NOW()),
+('FunLab', 'Medium', 'Create art using leaves, flowers, or other natural materials. Arrange them in a beautiful pattern or design.', 'FUNLAB', 'Connects creativity with nature appreciation', 'PHOTO', 20, NOW(), NOW()); 

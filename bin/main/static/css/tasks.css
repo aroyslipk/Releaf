@@ -1,0 +1,135 @@
+/* Override root variables to match dashboard styling */
+:root {
+    --primary-color: #2D7A48;
+    --secondary-color: #358856;
+    --success-color: #48BB78;
+    --background-color: #F0F4F8;
+    --card-background: #FFFFFF;
+    --text-color: #2d3748;
+    --muted-text-color: #718096;
+    --border-color: #E2E8F0;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --font-family: 'Poppins', sans-serif;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: var(--muted-text-color);
+    margin-top: 0.5rem;
+}
+
+.topic-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.topic-card {
+    background: var(--card-background);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.topic-header {
+    padding: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.topic-header:hover {
+    background-color: #F7FAFC;
+}
+
+.topic-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.topic-status {
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+}
+
+.topic-status.UNLOCKED {
+    background-color: #E8F5E9;
+    color: var(--primary-color);
+}
+
+.topic-status.LOCKED {
+    background-color: #FEE2E2;
+    color: #DC2626;
+}
+
+.topic-content {
+    padding: 0 1.5rem 1.5rem;
+    display: none;
+}
+
+.topic-card.expanded .topic-content {
+    display: block;
+}
+
+.tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.task-card {
+    background: #F7FAFC;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+/* Header override for Tasks page — make header nav match other pages */
+.tasks-page .user-header .main-nav{
+    background: #F7FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 999px;
+    padding: 0.5rem;
+}
+
+.tasks-page .user-header .main-nav .nav-link{
+    color: #2D7A48;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: transparent;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.tasks-page .user-header .main-nav .nav-link:hover{
+    background: rgba(45,122,72,0.08);
+    color: #2D7A48;
+}
+
+.tasks-page .user-header .main-nav .nav-link.active{
+    background: transparent;
+    color: #2D7A48;
+    box-shadow: none;
+    font-weight: 700;
+}
