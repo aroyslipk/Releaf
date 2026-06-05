@@ -78,6 +78,12 @@ public class User {
     @Column(name = "last_submitted_difficulty")
     private String lastSubmittedDifficulty;
 
+    @Column(name = "banned")
+    private Boolean banned = false;
+
+    @Column(name = "ban_note", length = 500)
+    private String banNote;
+
     public User() {}
 
     public User(String name, String email, String password) {
@@ -215,6 +221,22 @@ public class User {
 
     public void setLastSubmittedDifficulty(String lastSubmittedDifficulty) {
         this.lastSubmittedDifficulty = lastSubmittedDifficulty;
+    }
+
+    public Boolean getBanned() {
+        return banned;
+    }
+
+    public void setBanned(Boolean banned) {
+        this.banned = banned;
+    }
+
+    public String getBanNote() {
+        return banNote;
+    }
+
+    public void setBanNote(String banNote) {
+        this.banNote = banNote;
     }
 
     @PrePersist

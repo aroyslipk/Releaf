@@ -105,31 +105,4 @@
     padding: 1.5rem;
 }
 
-/* Header override for Tasks page — make header nav match other pages */
-.tasks-page .user-header .main-nav{
-    background: #F7FAFC;
-    border: 1px solid #E2E8F0;
-    border-radius: 999px;
-    padding: 0.5rem;
-}
-
-.tasks-page .user-header .main-nav .nav-link{
-    color: #2D7A48;
-    padding: 8px 14px;
-    border-radius: 8px;
-    background: transparent;
-    font-weight: 600;
-    transition: all 0.3s;
-}
-
-.tasks-page .user-header .main-nav .nav-link:hover{
-    background: rgba(45,122,72,0.08);
-    color: #2D7A48;
-}
-
-.tasks-page .user-header .main-nav .nav-link.active{
-    background: transparent;
-    color: #2D7A48;
-    box-shadow: none;
-    font-weight: 700;
-}
+/* Removed header override to match dashboard styling */

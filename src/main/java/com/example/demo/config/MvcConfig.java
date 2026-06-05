@@ -13,8 +13,14 @@ public class MvcConfig implements WebMvcConfigurer {
     private String uploadDir;
 
     @Override
-    public void addResourceHandlers(@NonNull ResourceHandlerRegistry registry) { // <-- ADD @NonNull HERE
+    public void addResourceHandlers(@NonNull ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/user-photos/**")
                 .addResourceLocations("file:" + uploadDir);
+        
+        // Add mapping for guide example images
+        String userDir = System.getProperty("user.dir");
+        String guideUploadDir = "file:" + userDir + "/src/main/resources/static/uploads/guide-examples/";
+        registry.addResourceHandler("/uploads/guide-examples/**")
+                .addResourceLocations(guideUploadDir);
     }
 }

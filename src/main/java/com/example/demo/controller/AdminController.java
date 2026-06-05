@@ -25,14 +25,18 @@ import org.springframework.stereotype.Controller;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.Arrays;
+import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -349,6 +353,41 @@ public class AdminController {
         }
         model.addAttribute("users", users);
         return "admin/users";
+    }
+
+    @PostMapping("/users/ban/{userId}")
+    public String banUser(@PathVariable Long userId,
+                          @RequestParam(required = false) String banNote,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes) {
+        Long adminId = (Long) session.getAttribute("adminId");
+        if (adminId == null) {
+            return "redirect:/login?type=admin";
+        }
+        try {
+            userService.banUser(userId, banNote);
+            redirectAttributes.addFlashAttribute("success", "User has been banned successfully.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error banning user: " + e.getMessage());
+        }
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/users/unban/{userId}")
+    public String unbanUser(@PathVariable Long userId,
+                            HttpSession session,
+                            RedirectAttributes redirectAttributes) {
+        Long adminId = (Long) session.getAttribute("adminId");
+        if (adminId == null) {
+            return "redirect:/login?type=admin";
+        }
+        try {
+            userService.unbanUser(userId);
+            redirectAttributes.addFlashAttribute("success", "User has been unbanned successfully.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error unbanning user: " + e.getMessage());
+        }
+        return "redirect:/admin/users";
     }
 
     @GetMapping("/groups")
@@ -953,20 +992,11 @@ public class AdminController {
         }
 
         try {
-            Optional<TaskGuide> guideOpt = taskGuideService.getGuideByTaskId(taskId);
+            Map<String, Object> guideData = taskGuideService.getGuideDataAsMap(taskId);
             
-            if (guideOpt.isPresent()) {
-                TaskGuide guide = guideOpt.get();
+            if (guideData != null) {
                 Map<String, Object> response = new HashMap<>();
                 response.put("success", true);
-                
-                Map<String, Object> guideData = new HashMap<>();
-                guideData.put("videoUrl", guide.getVideoUrl());
-                guideData.put("videoTitle", guide.getVideoTitle());
-                guideData.put("steps", guide.getSteps());
-                guideData.put("tips", guide.getTips());
-                guideData.put("exampleImages", guide.getExampleImages());
-                
                 response.put("guide", guideData);
                 return ResponseEntity.ok(response);
             } else {
@@ -978,45 +1008,32 @@ public class AdminController {
     }
 
     /**
-     * Save or update task guide
+     * Save or update task guide notes
      */
     @PostMapping("/greenverse/tasks/{taskId}/guide")
     @ResponseBody
     public ResponseEntity<?> saveTaskGuide(
             @PathVariable Long taskId,
-            @RequestParam(required = false) List<String> stepTitle,
-            @RequestParam(required = false) List<String> stepDescription,
-            @RequestParam(required = false) String videoUrl,
-            @RequestParam(required = false) String videoTitle,
-            @RequestParam(required = false) List<String> tips,
-            @RequestParam(required = false) List<MultipartFile> exampleImages,
+            @RequestParam(required = false) String notes,
             HttpSession session) {
         
         Long adminId = (Long) session.getAttribute("adminId");
         if (adminId == null) {
-            return ResponseEntity.status(401).body(Map.of("error", "Not authenticated"));
+            return ResponseEntity.status(401).body(Map.of("success", false, "error", "Not authenticated"));
         }
 
         try {
-            TaskGuide guide = taskGuideService.saveOrUpdateGuide(
-                taskId, 
-                stepTitle, 
-                stepDescription, 
-                videoUrl, 
-                videoTitle, 
-                tips, 
-                exampleImages
-            );
-            
+            TaskGuide guide = taskGuideService.saveOrUpdateGuide(taskId, notes);
             return ResponseEntity.ok(Map.of(
                 "success", true, 
-                "message", "Guide saved successfully",
+                "message", "Notes saved successfully",
                 "guideId", guide.getId()
             ));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(Map.of(
-                "error", "Failed to save guide: " + e.getMessage()
+                "success", false,
+                "error", "Failed to save notes: " + e.getMessage()
             ));
         }
     }
@@ -1034,31 +1051,9 @@ public class AdminController {
 
         try {
             taskGuideService.deleteGuide(taskId);
-            return ResponseEntity.ok(Map.of("success", true, "message", "Guide deleted successfully"));
+            return ResponseEntity.ok(Map.of("success", true, "message", "Notes deleted successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
-        }
-    }
-
-    /**
-     * Get example image
-     */
-    @GetMapping("/guide-example/{filename}")
-    @ResponseBody
-    public ResponseEntity<byte[]> getGuideExampleImage(@PathVariable String filename) {
-        try {
-            byte[] imageBytes = taskGuideService.getExampleImage(filename);
-            
-            String contentType = "image/jpeg";
-            if (filename.toLowerCase().endsWith(".png")) {
-                contentType = "image/png";
-            }
-            
-            return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .body(imageBytes);
-        } catch (IOException e) {
-            return ResponseEntity.notFound().build();
         }
     }
 }

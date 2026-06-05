@@ -1,34 +1,16 @@
-# Created by https://www.toptal.com/developers/gitignore/api/java,gradle,intellij,eclipse,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=java,gradle,intellij,eclipse,visualstudiocode
-
-### Caching ###
-.gradle/
-build/
 
 ### Gradle ###
-# Ignore Gradle GUI config
+.gradle/
+build/
 .gradletasknamecache
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+.gradle-build-info/
 !gradle/wrapper/gradle-wrapper.jar
 
-# Ignore Gradle build information
-.gradle-build-info/
-
 ### Java ###
-# Compiled class file
 *.class
-
-# Log file
 *.log
-
-# BlueJ files
 *.ctxt
-
-# Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
 *.nar
@@ -36,13 +18,10 @@ build/
 *.zip
 *.tar.gz
 *.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
 
-### IntelliJ ###
-# Covers IDEA's system files, Gradle's files and folders, and CMake's files and folders
+### IntelliJ IDEA ###
 .idea/
 *.iml
 *.iws
@@ -52,23 +31,22 @@ out/
 .settings/
 .classpath
 .project
+bin/
 
 ### VS Code ###
 .vscode/
 
-# Ignore sensitive config
-# Application properties with sensitive data
+### Database Files ###
+data/
+*.mv.db
+*.trace.db
+
+### Batch Files (Windows development) ###
+*.bat
+
+### Application Properties ###
 src/main/resources/application.properties
 !src/main/resources/application.properties.example
 
-
-
-# End of https://www.toptal.com/developers/gitignore/api/java,gradle,intellij,eclipse,visualstudiocode
-.clinerules/byterover-rules.md
-.kilocode/rules/byterover-rules.md
-.roo/rules/byterover-rules.md
-.windsurf/rules/byterover-rules.md
-.cursor/rules/byterover-rules.mdc
-.kiro/steering/byterover-rules.md
-.qoder/rules/byterover-rules.md
-.augment/rules/byterover-rules.md
+### Mac OS ###
+.DS_Store

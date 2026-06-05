@@ -1,12 +1,15 @@
+
+
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "task_guides")
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 public class TaskGuide {
 
     @Id
@@ -17,25 +20,8 @@ public class TaskGuide {
     @JoinColumn(name = "task_id", unique = true)
     private Task task;
 
-    @Column(columnDefinition = "TEXT")
-    private String videoUrl;
-
-    @Column(length = 255)
-    private String videoTitle;
-
-    @ElementCollection
-    @CollectionTable(name = "task_guide_steps", joinColumns = @JoinColumn(name = "guide_id"))
-    private List<GuideStep> steps = new ArrayList<>();
-
-    @ElementCollection
-    @CollectionTable(name = "task_guide_tips", joinColumns = @JoinColumn(name = "guide_id"))
-    @Column(name = "tip", columnDefinition = "TEXT")
-    private List<String> tips = new ArrayList<>();
-
-    @ElementCollection
-    @CollectionTable(name = "task_guide_examples", joinColumns = @JoinColumn(name = "guide_id"))
-    @Column(name = "image_path")
-    private List<String> exampleImages = new ArrayList<>();
+    @Column(name = "notes", columnDefinition = "CLOB")
+    private String notes;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -79,44 +65,12 @@ public class TaskGuide {
         this.task = task;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-
-    public String getVideoTitle() {
-        return videoTitle;
-    }
-
-    public void setVideoTitle(String videoTitle) {
-        this.videoTitle = videoTitle;
-    }
-
-    public List<GuideStep> getSteps() {
-        return steps;
-    }
-
-    public void setSteps(List<GuideStep> steps) {
-        this.steps = steps;
-    }
-
-    public List<String> getTips() {
-        return tips;
-    }
-
-    public void setTips(List<String> tips) {
-        this.tips = tips;
-    }
-
-    public List<String> getExampleImages() {
-        return exampleImages;
-    }
-
-    public void setExampleImages(List<String> exampleImages) {
-        this.exampleImages = exampleImages;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -133,51 +87,5 @@ public class TaskGuide {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    // Embeddable class for steps
-    @Embeddable
-    public static class GuideStep {
-        @Column(name = "step_order")
-        private Integer order;
-
-        @Column(name = "step_title")
-        private String title;
-
-        @Column(name = "step_description", columnDefinition = "TEXT")
-        private String description;
-
-        public GuideStep() {
-        }
-
-        public GuideStep(Integer order, String title, String description) {
-            this.order = order;
-            this.title = title;
-            this.description = description;
-        }
-
-        public Integer getOrder() {
-            return order;
-        }
-
-        public void setOrder(Integer order) {
-            this.order = order;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
     }
 }

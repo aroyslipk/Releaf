@@ -32,9 +32,7 @@
                         <span class="progress-value">${user.xpPoints}/${nextRewardXP} XP</span>
                     </div>
                     <div class="progress-bar-container">
-                        <c:set var="progressXP" value="${user.xpPoints - currentLevelXP}" />
-                        <c:set var="totalXPNeeded" value="${nextRewardXP - currentLevelXP}" />
-                        <c:set var="progressPercent" value="${totalXPNeeded > 0 ? (progressXP * 100) / totalXPNeeded : 0}" />
+                        <c:set var="progressPercent" value="${nextRewardXP > 0 ? (user.xpPoints * 100.0) / nextRewardXP : 0}" />
                         <div class="progress-bar" style="width: ${progressPercent}%;"></div>
                     </div>
                 </div>

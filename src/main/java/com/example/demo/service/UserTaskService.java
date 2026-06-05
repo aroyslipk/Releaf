@@ -68,6 +68,7 @@ public class UserTaskService {
 
         // Check if user already has a pending or approved submission for this task
         List<UserTask> existingSubmissions = userTaskRepository.findByUserIdAndTaskId(userId, taskId);
+        UserTask existingRejected = null;
         if (!existingSubmissions.isEmpty()) {
             // Get the most recent submission
             UserTask existing = existingSubmissions.get(0);
@@ -79,6 +80,11 @@ public class UserTaskService {
                 System.err.println("❌ Task already completed");
                 throw new RuntimeException("You have already completed this task");
             }
+            if (existing.getStatus() == UserTask.TaskStatus.REJECTED) {
+                // User is resubmitting a rejected task - we'll update the existing record
+                existingRejected = existing;
+                System.out.println("🔄 Resubmitting previously rejected task - will update existing record");
+            }
         }
 
         // Save the proof image
@@ -86,16 +92,27 @@ public class UserTaskService {
         String imageFileName = saveProofImage(proofImage, userId, taskId);
         System.out.println("✓ Image saved: " + imageFileName);
 
-        // Create new UserTask submission - ALWAYS PENDING, NO AI YET
-        UserTask userTask = new UserTask(user, task);
-        userTask.setProofImage(imageFileName);
-        userTask.setStatus(UserTask.TaskStatus.PENDING_REVIEW);
-        userTask.setReviewerNotes("Awaiting AI analysis and admin review");
-
-        // Save the user task first
-        System.out.println("💾 Saving user task...");
-        UserTask savedTask = userTaskRepository.save(userTask);
-        System.out.println("✅ Task submitted successfully! ID: " + savedTask.getId());
+        UserTask savedTask;
+        if (existingRejected != null) {
+            // Update existing rejected record instead of creating new one
+            // This avoids the UNIQUE(user_id, task_id) constraint violation
+            existingRejected.setProofImage(imageFileName);
+            existingRejected.setStatus(UserTask.TaskStatus.PENDING_REVIEW);
+            existingRejected.setSubmittedAt(LocalDateTime.now());
+            existingRejected.setReviewerNotes("Awaiting AI analysis and admin review");
+            existingRejected.setReviewedAt(null);
+            existingRejected.setReviewedBy(null);
+            savedTask = userTaskRepository.save(existingRejected);
+            System.out.println("✅ Task resubmitted successfully! ID: " + savedTask.getId());
+        } else {
+            // Create new UserTask submission - ALWAYS PENDING, NO AI YET
+            UserTask userTask = new UserTask(user, task);
+            userTask.setProofImage(imageFileName);
+            userTask.setStatus(UserTask.TaskStatus.PENDING_REVIEW);
+            userTask.setReviewerNotes("Awaiting AI analysis and admin review");
+            savedTask = userTaskRepository.save(userTask);
+            System.out.println("✅ Task submitted successfully! ID: " + savedTask.getId());
+        }
         
         // Update user's last active task and topic/difficulty
         user.setLastActiveTaskId(taskId);

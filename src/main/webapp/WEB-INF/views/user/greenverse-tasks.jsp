@@ -21,6 +21,21 @@
 <link rel="stylesheet" href="<c:url value='/css/modern-admin.css'/>">
 <link rel="stylesheet" href="<c:url value='/css/greenverse-tasks.css'/>">
 
+<style>
+/* CRITICAL HEADER FIX - Force logo text to be bold */
+.user-header .logo-text {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #2c3e50 !important;
+    -webkit-text-fill-color: #2c3e50 !important;
+    background: none !important;
+    letter-spacing: 0 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+</style>
+
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/user-header.jsp" %>
@@ -92,7 +107,7 @@
         </div>
         <div class="stat-info">
             <p>Available Tasks</p>
-            <h3 class="stat-number" data-target="${topicsAvailable * 9}">0</h3>
+            <h3 class="stat-number" data-target="${incompleteAvailableTasks.size()}">0</h3>
         </div>
     </div>
 
@@ -296,84 +311,13 @@
 <div class="task-modal-layout">
     <!-- Left Side: Task Guide -->
     <div class="task-guide-section">
-        <h3 class="guide-title">📚 How to Complete This Task</h3>
+        <h3 class="guide-title">📝 Task Notes</h3>
         <p id="taskDescription" class="task-desc"></p>
         
-        <!-- Guide Tabs -->
-        <div class="guide-tabs">
-            <button class="guide-tab active" data-tab="steps">📝 Steps</button>
-            <button class="guide-tab" data-tab="video">🎬 Video</button>
-            <button class="guide-tab" data-tab="examples">📸 Examples</button>
-            <button class="guide-tab" data-tab="tips">💡 Tips</button>
-        </div>
-
-        <!-- Guide Content -->
-        <div class="guide-content">
-            <!-- Steps Tab -->
-            <div class="guide-panel active" id="steps-panel">
-                <div class="steps-list" id="taskSteps">
-                    <div class="step-item">
-                        <div class="step-number">1</div>
-                        <div class="step-text">
-                            <strong>Prepare your materials</strong>
-                            <p>Gather everything you need before starting</p>
-                        </div>
-                    </div>
-                    <div class="step-item">
-                        <div class="step-number">2</div>
-                        <div class="step-text">
-                            <strong>Take action</strong>
-                            <p>Follow the task requirements carefully</p>
-                        </div>
-                    </div>
-                    <div class="step-item">
-                        <div class="step-number">3</div>
-                        <div class="step-text">
-                            <strong>Capture proof</strong>
-                            <p>Take a clear photo showing your completed task</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Video Tab -->
-            <div class="guide-panel" id="video-panel">
-                <div class="video-container" id="taskVideo">
-                    <div class="video-placeholder">
-                        <i class="fas fa-play-circle"></i>
-                        <p>Video guide coming soon!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Examples Tab -->
-            <div class="guide-panel" id="examples-panel">
-                <div class="examples-grid" id="taskExamples">
-                    <div class="example-card">
-                        <div class="example-image">
-                            <i class="fas fa-image"></i>
-                        </div>
-                        <p class="example-caption">Example submission</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tips Tab -->
-            <div class="guide-panel" id="tips-panel">
-                <div class="tips-list" id="taskTips">
-                    <div class="tip-item">
-                        <i class="fas fa-lightbulb"></i>
-                        <p>Make sure your photo is clear and well-lit</p>
-                    </div>
-                    <div class="tip-item">
-                        <i class="fas fa-lightbulb"></i>
-                        <p>Include context in your photo to show the full action</p>
-                    </div>
-                    <div class="tip-item">
-                        <i class="fas fa-lightbulb"></i>
-                        <p>Be authentic - we value genuine efforts!</p>
-                    </div>
-                </div>
+        <div class="notes-content" id="taskNotes">
+            <div class="notes-placeholder">
+                <i class="fas fa-sticky-note"></i>
+                <p>Loading notes...</p>
             </div>
         </div>
     </div>
@@ -449,181 +393,45 @@
     color: #374151;
 }
 
-.guide-tabs {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
+.notes-content {
+    min-height: 250px;
 }
 
-.guide-tab {
-    padding: 0.6rem 1rem;
-    border: 2px solid #e5e7eb;
-    background: white;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.3s;
-}
-
-.guide-tab:hover {
-    border-color: #10b981;
-    background: #f0fdf4;
-}
-
-.guide-tab.active {
-    background: #10b981;
-    color: white;
-    border-color: #10b981;
-}
-
-.guide-content {
-    position: relative;
-    min-height: 300px;
-}
-
-.guide-panel {
-    display: none;
-    animation: fadeIn 0.3s;
-}
-
-.guide-panel.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.steps-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.step-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem;
-    background: white;
-    border-radius: 12px;
-    border: 2px solid #e5e7eb;
-    transition: all 0.3s;
-}
-
-.step-item:hover {
-    border-color: #10b981;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
-}
-
-.step-number {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #10b981, #059669);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-.step-text strong {
-    color: #047857;
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-.step-text p {
-    color: #6b7280;
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-.video-container {
-    background: #f9fafb;
-    border-radius: 12px;
-    overflow: hidden;
-    aspect-ratio: 16/9;
-}
-
-.video-placeholder {
+.notes-placeholder {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    padding: 3rem 1rem;
     color: #9ca3af;
-}
-
-.video-placeholder i {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-}
-
-.examples-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-
-.example-card {
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.3s;
-}
-
-.example-card:hover {
-    border-color: #10b981;
-    transform: translateY(-2px);
-}
-
-.example-image {
-    aspect-ratio: 4/3;
-    background: #f9fafb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #9ca3af;
-    font-size: 2rem;
-}
-
-.example-caption {
-    padding: 0.5rem;
     text-align: center;
-    font-size: 0.85rem;
-    color: #6b7280;
+}
+
+.notes-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.notes-placeholder p {
+    font-size: 0.95rem;
     margin: 0;
 }
 
-.tips-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.tip-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem;
+.notes-display {
     background: #fffbeb;
+    border: 1px solid #fde68a;
     border-radius: 12px;
+    padding: 1.25rem;
     border-left: 4px solid #f59e0b;
 }
 
-.tip-item i {
-    color: #f59e0b;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-
-.tip-item p {
-    margin: 0;
+.notes-text {
     color: #78350f;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .task-upload-section {
@@ -945,21 +753,71 @@ if (targetGrid) {
 
     // Modal functions
     function openTaskModal(taskId, description, button) {
+        console.log('Opening task modal for task:', taskId);
+        
         document.getElementById('taskId').value = taskId;
         document.getElementById('taskDescription').innerText = description;
         document.getElementById('taskModal').style.display = 'flex';
         currentTaskButton = button;
         
-        // Reset to first tab
-        document.querySelectorAll('.guide-tab').forEach(tab => tab.classList.remove('active'));
-        document.querySelectorAll('.guide-panel').forEach(panel => panel.classList.remove('active'));
-        document.querySelector('.guide-tab[data-tab="steps"]').classList.add('active');
-        document.getElementById('steps-panel').classList.add('active');
-        
         // Reset upload area
         document.getElementById('imagePreview').style.display = 'none';
         document.getElementById('uploadArea').style.display = 'block';
         document.getElementById('proofImage').value = '';
+        
+        // Load guide data from server
+        loadTaskGuide(taskId);
+    }
+    
+    function loadTaskGuide(taskId) {
+        console.log('Loading guide for task:', taskId);
+        
+        const url = '/user/tasks/' + taskId + '/guide';
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Guide data received:', data);
+                if (data.success && data.guide) {
+                    displayGuide(data.guide);
+                } else {
+                    // Show default guide
+                    showDefaultGuide();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading guide:', error);
+                showDefaultGuide();
+            });
+    }
+    
+    function displayGuide(guide) {
+        console.log('=== Displaying Guide Notes ===');
+        console.log('Notes data:', guide.notes);
+        var notesContainer = document.getElementById('taskNotes');
+        
+        if (guide.notes && guide.notes.trim() !== '') {
+            notesContainer.innerHTML =
+                '<div class="notes-display">' +
+                    '<div class="notes-text"></div>' +
+                '</div>';
+            // Use textContent to safely display text without XSS risk
+            // CSS white-space: pre-wrap preserves newlines
+            notesContainer.querySelector('.notes-text').textContent = guide.notes;
+        } else {
+            showDefaultGuide();
+        }
+    }
+    
+    function showDefaultGuide() {
+        const notesContainer = document.getElementById('taskNotes');
+        notesContainer.innerHTML = `
+            <div class="notes-placeholder">
+                <i class="fas fa-sticky-note"></i>
+                <p>No notes available for this task.</p>
+            </div>
+        `;
+        console.log('No guide data found, showing default');
     }
 
     function closeTaskModal() {
@@ -978,21 +836,6 @@ if (targetGrid) {
             closeTaskModal();
         }
     }
-
-    // Guide tabs functionality
-    document.querySelectorAll('.guide-tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-            const targetTab = this.dataset.tab;
-            
-            // Remove active class from all tabs and panels
-            document.querySelectorAll('.guide-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.guide-panel').forEach(p => p.classList.remove('active'));
-            
-            // Add active class to clicked tab and corresponding panel
-            this.classList.add('active');
-            document.getElementById(targetTab + '-panel').classList.add('active');
-        });
-    });
 
     // Drag and drop functionality
     const uploadArea = document.getElementById('uploadArea');

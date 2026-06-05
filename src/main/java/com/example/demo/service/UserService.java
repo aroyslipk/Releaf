@@ -14,6 +14,7 @@ import com.example.demo.repository.GroupRepository;
 import com.example.demo.repository.UserTaskRepository;
 import com.example.demo.repository.UserTopicProgressRepository;
 import com.example.demo.repository.GroupMessageRepository;
+import com.example.demo.repository.AdminNotificationRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,6 +57,9 @@ public class UserService {
 
     @Autowired
     private GroupMessageRepository groupMessageRepository;
+
+    @Autowired
+    private AdminNotificationRepository adminNotificationRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -398,6 +402,22 @@ public class UserService {
         }
     }
 
+    public void banUser(Long userId, String banNote) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setBanned(true);
+        user.setBanNote(banNote);
+        userRepository.save(user);
+    }
+
+    public void unbanUser(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setBanned(false);
+        user.setBanNote(null);
+        userRepository.save(user);
+    }
+
     /**
      * Delete user account after password confirmation
      * @param userId The user ID
@@ -442,7 +462,12 @@ public class UserService {
             // Clear user relationships before deletion to avoid foreign key constraint violations
             System.err.println("Clearing user relationships...");
             
-            // Delete UserTask records
+            // IMPORTANT: Delete AdminNotification records FIRST (they reference UserTasks via FK)
+            // Must be done before deleting UserTasks to avoid referential integrity violation
+            adminNotificationRepository.deleteByUserId(userId);
+            System.err.println("Deleted AdminNotification records for user ID: " + userId);
+            
+            // Now delete UserTask records (no more FK references from AdminNotification)
             List<UserTask> userTasks = userTaskRepository.findByUserId(userId);
             if (!userTasks.isEmpty()) {
                 userTaskRepository.deleteAll(userTasks);

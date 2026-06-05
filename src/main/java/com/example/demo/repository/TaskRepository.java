@@ -52,6 +52,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("SELECT COUNT(t) FROM Task t WHERE t.topic = :topic AND t.level = :level")
     Long countTasksByTopicAndLevel(@Param("topic") String topic, @Param("level") String level);
     
+    // Count by topic, level, and task type for accurate task counts
+    @Query("SELECT COUNT(t) FROM Task t WHERE t.topic = :topic AND t.level = :level AND t.taskType = :taskType")
+    Long countByTopicAndLevelAndTaskType(@Param("topic") String topic, @Param("level") String level, @Param("taskType") String taskType);
+    
     // New methods for dashboard statistics
     @Query("SELECT COUNT(t) FROM Task t")
     @Override

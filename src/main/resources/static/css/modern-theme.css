@@ -38,81 +38,10 @@
     letter-spacing: 0.3px;
 }
 
-/* Make only the Tasks link look like the Gemini logo when on tasks page */
-.tasks-page .main-nav .nav-link.active {
-    color: transparent; /* gradient fill via background-clip */
-    background: linear-gradient(90deg, #8ab4f8 0%, #c070ea 30%, #ff7eb6 60%, #7ee8a2 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 6px 18px rgba(138,36,170,0.12), 0 1px 0 rgba(255,255,255,0.03);
-    position: relative;
-}
-
-/* Apply gradient specifically to the inner text span to ensure consistent rendering */
-.tasks-page .main-nav .nav-link.active .gemini-text {
-    background: linear-gradient(90deg, #8ab4f8 0%, #c070ea 30%, #ff7eb6 60%, #7ee8a2 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent !important;
-    color: transparent !important;
-    font-weight: 700;
-    font-size: 1.15rem;
-    display: inline-block;
-    position: relative;
-    z-index: 2; /* keep above glow */
-}
-
-.tasks-page .main-nav .nav-link.active .shimmer {
-    z-index: 3;
-    mix-blend-mode: overlay;
-    position: absolute;
-    pointer-events: none;
-}
-
-.tasks-page .main-nav .nav-link.active::before {
-    /* soft outer glow */
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    height: 120%;
-    border-radius: 12px;
-    filter: blur(14px);
-    background: linear-gradient(90deg, rgba(138,36,170,0.18), rgba(26,115,232,0.12), rgba(34,197,94,0.12));
-    z-index: -1;
-    opacity: 0.9;
-}
-
-.tasks-page .main-nav .nav-link.active::after {
-    /* keep existing underline but make it subtle */
-    left: 30%;
-    width: 40%;
-    height: 3px;
-    bottom: 4px;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(138,36,170,0.16);
-}
-
-/* small shimmer moving across the text */
-.tasks-page .main-nav .nav-link.active .shimmer {
-    position: absolute;
-    left: -40%;
-    top: 0;
-    width: 40%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(255,255,255,0.0), rgba(255,255,255,0.25), rgba(255,255,255,0.0));
-    transform: skewX(-18deg);
-    animation: shimmer 2.5s linear infinite;
-    pointer-events: none;
-}
-
-@keyframes shimmer {
-    0% { left: -50%; }
-    100% { left: 120%; }
-}
+/* REMOVED: All tasks-page header overrides have been removed to ensure consistency across pages.
+ * The header styling is now fully controlled by modern-admin.css for all pages.
+ * This ensures Dashboard, Tasks, Achievements, Groups, and all other pages have identical headers.
+ */
 
 .nav-menu a:hover {
     color: #fff;
@@ -194,12 +123,9 @@
     border: none;
 }
 
-/* Logo Enhancement */
+/* Logo Enhancement - DEPRECATED: handled by modern-admin.css for consistency */
 .logo-text {
-    background: linear-gradient(120deg, #1a73e8, #8ab4f8, #4285f4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
+    /* No styling overrides - handled by modern-admin.css */
 }
 
 /* Button Enhancement */

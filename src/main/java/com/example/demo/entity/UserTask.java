@@ -2,14 +2,11 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_tasks", 
        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "task_id"}))
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UserTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,7 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tasks - ReLeaf</title>
     <link rel="stylesheet" href="/css/modern-admin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+/* CRITICAL HEADER FIX - Force logo text to be bold */
+.user-header .logo-text {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #2c3e50 !important;
+    -webkit-text-fill-color: #2c3e50 !important;
+    background: none !important;
+    letter-spacing: 0 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+</style>
     <style>
         .tasks-container {
             min-height: 80vh;

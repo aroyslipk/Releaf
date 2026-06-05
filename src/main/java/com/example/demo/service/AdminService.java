@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import jakarta.annotation.PostConstruct;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -20,14 +18,6 @@ public class AdminService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
-    @PostConstruct
-    public void initializeDefaultAdmin() {
-        if (adminRepository.count() == 0) {
-            // Create default admin if no admin exists
-            createAdmin("admin", "admin123");
-        }
-    }
 
     public Admin createAdmin(String username, String password) {
         if (adminRepository.existsByUsername(username)) {

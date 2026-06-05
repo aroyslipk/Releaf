@@ -8,13 +8,13 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    // Use Gradle Java toolchain to request Java 21 for compilation and runtime
+    // Use Gradle Java toolchain to request Java 25 for compilation and runtime
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
     // Keep explicit source/target compatibility for tools that read it
-    sourceCompatibility = '21'
-    targetCompatibility = '21'
+    sourceCompatibility = '25'
+    targetCompatibility = '25'
 }
 
 repositories {
@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'com.h2database:h2'
+    implementation 'org.postgresql:postgresql' // For production deployment
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     
     // JSP Support (correct version for Spring Boot 3.x and Tomcat 10.x)

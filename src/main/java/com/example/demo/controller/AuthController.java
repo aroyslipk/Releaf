@@ -56,8 +56,15 @@ public class AuthController {
         } else {
             Optional<User> userOpt = userService.findByEmail(email);
             if (userOpt.isPresent() && userService.validatePassword(password, userOpt.get().getPassword())) {
-                session.setAttribute("userId", userOpt.get().getId());
-                session.setAttribute("userName", userOpt.get().getName());
+                User user = userOpt.get();
+                if (Boolean.TRUE.equals(user.getBanned())) {
+                    redirectAttributes.addFlashAttribute("banNote", user.getBanNote());
+                    redirectAttributes.addFlashAttribute("banned", true);
+                    redirectAttributes.addAttribute("type", loginType);
+                    return "redirect:/login";
+                }
+                session.setAttribute("userId", user.getId());
+                session.setAttribute("userName", user.getName());
                 session.setAttribute("userType", "user");
                 return "redirect:/user/dashboard";
             }

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.Task;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.repository.UserTaskRepository;
+import com.example.demo.repository.AdminNotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +54,22 @@ public class TaskService {
     
     public Task createTask(String topic, String level, String description) {
         Task task = new Task(topic, level, description);
+        
+        // Set XP based on level
+        switch (level) {
+            case "Easy":
+                task.setXpReward(10);
+                break;
+            case "Medium":
+                task.setXpReward(20);
+                break;
+            case "Hard":
+                task.setXpReward(30);
+                break;
+            default:
+                task.setXpReward(10); // Default fallback
+        }
+        
         return taskRepository.save(task);
     }
 
@@ -130,12 +147,34 @@ public class TaskService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private TaskGuideService taskGuideService;
+    
+    @Autowired
+    private AdminNotificationRepository adminNotificationRepository;
 
     @Transactional
     public void deleteTask(Long id) {
         Optional<Task> task = taskRepository.findById(id);
         if (task.isPresent()) {
-            // First, remove this task from all users' completed tasks
+            // Step 1: Delete admin notifications related to this task's user_tasks
+            try {
+                adminNotificationRepository.deleteByTaskId(id);
+                System.out.println("Deleted admin notifications for task: " + id);
+            } catch (Exception e) {
+                System.out.println("No notifications to delete or error: " + e.getMessage());
+            }
+            
+            // Step 2: Delete the task guide if exists
+            try {
+                taskGuideService.deleteGuide(id);
+                System.out.println("Deleted guide for task: " + id);
+            } catch (Exception e) {
+                System.out.println("No guide to delete or error: " + e.getMessage());
+            }
+            
+            // Step 3: Remove this task from all users' completed tasks
             List<User> usersWithCompletedTask = userRepository.findByCompletedTaskId(id);
             
             for (User user : usersWithCompletedTask) {
@@ -143,7 +182,7 @@ public class TaskService {
                 userRepository.save(user);
             }
             
-            // Clear any users' last active task if it's the task being deleted
+            // Step 4: Clear any users' last active task if it's the task being deleted
             List<User> usersWithLastActiveTask = userRepository.findAll().stream()
                 .filter(user -> user.getLastActiveTaskId() != null && user.getLastActiveTaskId().equals(id))
                 .collect(Collectors.toList());
@@ -153,11 +192,13 @@ public class TaskService {
                 userRepository.save(user);
             }
             
-            // Then delete all related user_tasks entries
+            // Step 5: Delete all related user_tasks entries
             userTaskRepository.deleteByTaskId(id);
+            System.out.println("Deleted user_tasks for task: " + id);
             
-            // Finally delete the task itself
+            // Step 6: Finally delete the task itself
             taskRepository.deleteById(id);
+            System.out.println("Successfully deleted task: " + id);
         }
     }
 

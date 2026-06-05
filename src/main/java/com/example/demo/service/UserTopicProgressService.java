@@ -16,6 +16,8 @@ import java.util.Optional;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -88,14 +90,20 @@ public class UserTopicProgressService {
         UserTopicProgress currentTopic = null;
         UserTopicProgress nextTopic = null;
         
-        // Get task counts for each topic
+        // Get task counts for each topic from the database (not hardcoded)
         Map<String, Map<String, Integer>> taskCounts = new HashMap<>();
         for (String topic : TOPIC_ORDER) {
             Map<String, Integer> counts = new HashMap<>();
-            counts.put("easy", 3); // Fixed count of 3 tasks per difficulty
-            counts.put("medium", 3);
-            counts.put("hard", 3);
-            counts.put("total", 9); // Total of 9 tasks per topic
+            
+            // Query actual task counts from database
+            long easyCount = taskRepository.countByTopicAndLevelAndTaskType(topic, "Easy", "GREENVERSE");
+            long mediumCount = taskRepository.countByTopicAndLevelAndTaskType(topic, "Medium", "GREENVERSE");
+            long hardCount = taskRepository.countByTopicAndLevelAndTaskType(topic, "Hard", "GREENVERSE");
+            
+            counts.put("easy", (int) easyCount);
+            counts.put("medium", (int) mediumCount);
+            counts.put("hard", (int) hardCount);
+            counts.put("total", (int) (easyCount + mediumCount + hardCount));
             taskCounts.put(topic, counts);
         }
         result.put("taskCounts", taskCounts);
@@ -244,6 +252,28 @@ public class UserTopicProgressService {
         }
 
         return availableTasks;
+    }
+    
+    /**
+     * Get INCOMPLETE available tasks for user (excludes completed tasks)
+     * This is used for dashboard "Available Tasks" count
+     */
+    public List<Task> getIncompleteAvailableTasksForUser(Long userId) {
+        List<Task> allAvailableTasks = getAvailableTasksForUser(userId);
+        
+        // Get user's completed tasks
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            return allAvailableTasks;
+        }
+        
+        User user = userOpt.get();
+        Set<Task> completedTasks = user.getCompletedTasks();
+        
+        // Filter out completed tasks
+        return allAvailableTasks.stream()
+                .filter(task -> !completedTasks.contains(task))
+                .collect(Collectors.toList());
     }
 
     public boolean isTaskAvailableForUser(Long userId, Long taskId) {

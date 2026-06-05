@@ -8,6 +8,7 @@
     <title>Greenverse Tasks - ReLeaf</title>
     <link rel="stylesheet" href="/css/modern-admin.css">
     <link rel="stylesheet" href="/css/tasks.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body class="tasks-page">

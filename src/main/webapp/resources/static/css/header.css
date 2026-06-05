@@ -1,107 +1,12 @@
-.user-header {
-    background-color: #262f3d;
-    padding: 0.8rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+/* 
+ * DEPRECATED: This file is replaced by modern-admin.css for consistent header styling
+ * Keeping only profile dropdown styles for backward compatibility
+ */
 
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.logo {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-}
-
-.logo-text {
-    color: white;
-    font-size: 1.4rem;
-    font-weight: bold;
-}
-
-.main-nav {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.main-nav .nav-link {
-    color: white;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 0.5rem 0;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.2s;
-}
-
-.main-nav .nav-link.active {
-    border-bottom: 2px solid #4CAF50;
-}
-
-.main-nav .nav-link:hover {
-    border-bottom: 2px solid #4CAF50;
-}
-
-.user-menu {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.username,
-.xp-points {
-    color: white;
-    font-weight: 500;
-    background-color: #3a4356;
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-}
-
-.profile-dropdown {
-    position: relative;
-}
-
-.profile-dropdown .avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid #4CAF50;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    margin-top: 0.5rem;
-    overflow: hidden;
-}
-
-.profile-dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content a {
-    display: block;
-    padding: 0.75rem 1rem;
-    color: #333;
-    text-decoration: none;
-}
-
-.dropdown-content a:hover {
-    background: #f0f0f0;
-}
+/* Profile Dropdown - keep for backward compatibility */
+.profile-dropdown{position:relative}
+.profile-dropdown .avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;cursor:pointer;border:2px solid rgba(226, 232, 240, 0.8)}
+.profile-dropdown .dropdown-content{position:absolute;right:0;top:52px;background:#ffffff;color:#222;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.12);display:none;min-width:160px;overflow:hidden;z-index:9999}
+.profile-dropdown:hover .dropdown-content{display:block}
+.profile-dropdown .dropdown-content a{display:block;padding:10px 12px;color:#222;text-decoration:none}
+.profile-dropdown .dropdown-content a:hover{background:#f4f6f7}

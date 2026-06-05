@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Collections;
@@ -57,6 +58,9 @@ public class UserController {
 
     @Autowired
     private MessageService messageService;
+    
+    @Autowired
+    private TaskGuideService taskGuideService;
 
     @Autowired
     private UserTaskRepository userTaskRepository;
@@ -346,10 +350,16 @@ public String greenverse(@RequestParam(required = false) String view, HttpSessio
                     (Map<String, Map<String, Integer>>) progressData.get("taskCounts") :
                     new HashMap<>();
 
-                // Step 4: Get available tasks for the user
+                // Step 4: Get available tasks for the user (all unlocked tasks)
                 List<Task> availableTasks = userTopicProgressService.getAvailableTasksForUser(userId);
                 if (availableTasks == null) {
                     availableTasks = Collections.emptyList();
+                }
+                
+                // Get incomplete available tasks for dashboard count (excludes completed tasks)
+                List<Task> incompleteAvailableTasks = userTopicProgressService.getIncompleteAvailableTasksForUser(userId);
+                if (incompleteAvailableTasks == null) {
+                    incompleteAvailableTasks = Collections.emptyList();
                 }
 
                 // Step 5: Get user's task completion status
@@ -372,6 +382,7 @@ public String greenverse(@RequestParam(required = false) String view, HttpSessio
                 model.addAttribute("currentTopic", currentTopic);
                 model.addAttribute("nextTopic", nextTopic);
                 model.addAttribute("availableTasks", availableTasks);
+                model.addAttribute("incompleteAvailableTasks", incompleteAvailableTasks);
                 model.addAttribute("userTasks", userTasks);
                 model.addAttribute("lastSubmittedTask", lastSubmittedTask);
                 model.addAttribute("taskCounts", taskCounts);
@@ -671,6 +682,35 @@ public String greenverse(@RequestParam(required = false) String view, HttpSessio
             return ResponseEntity.notFound().build();
         }
     }
+    
+    /**
+     * Public endpoint for users to get task guide data.
+     * Uses getGuideDataAsMap() which copies all @ElementCollection data
+     * into plain Java objects inside the @Transactional method,
+     * avoiding all lazy-loading issues.
+     */
+    @GetMapping("/tasks/{taskId}/guide")
+    @ResponseBody
+    public ResponseEntity<?> getTaskGuide(@PathVariable Long taskId) {
+        try {
+            // This method runs inside @Transactional on the service,
+            // so all lazy collections are resolved before returning
+            Map<String, Object> guideData = taskGuideService.getGuideDataAsMap(taskId);
+            
+            if (guideData != null) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("success", true);
+                response.put("guide", guideData);
+                return ResponseEntity.ok(response);
+            } else {
+                return ResponseEntity.ok(Map.of("success", false, "message", "No guide found"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(Map.of("success", false, "error", e.getMessage()));
+        }
+    }
+
 
     @GetMapping("/notices")
     public String notices(HttpSession session, Model model) {
@@ -1015,7 +1055,8 @@ public String greenverse(@RequestParam(required = false) String view, HttpSessio
                 return "redirect:/login";
             }
 
-            Optional<User> userOpt = userService.findById(userId);
+            // Use findByIdWithCollections to properly load user data (matching dashboard/greenverse pattern)
+            Optional<User> userOpt = userService.findByIdWithCollections(userId);
             if (userOpt.isEmpty()) {
                 return "redirect:/login";
             }
@@ -1167,6 +1208,16 @@ public String greenverse(@RequestParam(required = false) String view, HttpSessio
         }
 
         return "redirect:/user/delete-account";
+    }
+
+    @GetMapping("/eco-store")
+    public String ecoStore(HttpSession session, Model model) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/login";
+        }
+        addUserToModel(session, model);
+        return "user/eco-store";
     }
 
     // Notification count endpoint for bell icon

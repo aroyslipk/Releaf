@@ -279,6 +279,15 @@
             </div>
         </div>
 
+        <c:if test="${not empty banned}">
+            <div class="alert alert-error" style="background: #fff3cd; color: #856404; border: 1px solid #ffc107;">
+                <strong><i class="fas fa-ban" style="margin-right:8px;"></i>Account Banned</strong>
+                <c:if test="${not empty banNote}">
+                    <p style="margin:8px 0 0 0; font-size:0.9rem;">Reason: ${banNote}</p>
+                </c:if>
+            </div>
+        </c:if>
+
         <c:if test="${not empty error}">
             <div class="alert alert-error">${error}</div>
         </c:if>

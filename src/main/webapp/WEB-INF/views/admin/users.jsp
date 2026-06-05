@@ -111,7 +111,9 @@
                             <th>XP Points</th>
                             <th>Tasks</th>
                             <th>Group</th>
+                            <th>Status</th>
                             <th>Joined</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -132,7 +134,36 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${user.banned}">
+                                            <span class="badge bg-danger">Banned</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="badge bg-success">Active</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <td>${user.createdAt.toLocalDate()}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${user.banned}">
+                                            <button class="btn btn-success btn-sm unban-user-btn" 
+                                                    data-user-id="${user.id}" 
+                                                    title="Unban this user">
+                                                <i class="fas fa-unlock"></i> Unban
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn btn-danger btn-sm ban-user-btn" 
+                                                    data-user-id="${user.id}" 
+                                                    data-user-name="${user.name}" 
+                                                    title="Ban this user">
+                                                <i class="fas fa-ban"></i> Ban
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -161,9 +192,9 @@
                             <tr>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${status.index == 0}">🥇</c:when>
-                                        <c:when test="${status.index == 1}">🥈</c:when>
-                                        <c:when test="${status.index == 2}">🥉</c:when>
+                                        <c:when test="${status.index == 0}"><span style="font-size: 1.5rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3))">&#x1F947;</span></c:when>
+                                        <c:when test="${status.index == 1}"><span style="font-size: 1.5rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3))">&#x1F948;</span></c:when>
+                                        <c:when test="${status.index == 2}"><span style="font-size: 1.5rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3))">&#x1F949;</span></c:when>
                                         <c:otherwise>${status.index + 1}</c:otherwise>
                                     </c:choose>
                                 </td>
@@ -178,6 +209,137 @@
         </div>
     </div>
 </div>
+
+<script>
+console.log('Admin users.jsp script loaded');
+
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded');
+    
+    // Check if modal and form exist
+    var modal = document.getElementById('banModal');
+    var form = document.getElementById('banForm');
+    console.log('Modal element:', modal);
+    console.log('Ban form element:', form);
+    
+    // Add event listeners to all ban buttons
+    var banButtons = document.querySelectorAll('.ban-user-btn');
+    console.log('Found', banButtons.length, 'ban buttons');
+    
+    banButtons.forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation(); // Stop event from bubbling up
+            var userId = this.getAttribute('data-user-id');
+            var userName = this.getAttribute('data-user-name');
+            console.log('Ban button clicked - userId:', userId, 'userName:', userName);
+            showBanModal(userId, userName);
+        });
+    });
+    
+    // Add event listeners to all unban buttons
+    var unbanButtons = document.querySelectorAll('.unban-user-btn');
+    console.log('Found', unbanButtons.length, 'unban buttons');
+    
+    unbanButtons.forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            var userId = this.getAttribute('data-user-id');
+            console.log('Unban button clicked - userId:', userId);
+            unbanUser(userId);
+        });
+    });
+});
+
+function showBanModal(userId, userName) {
+    console.log('showBanModal called with userId:', userId, 'userName:', userName);
+    try {
+        var modal = document.getElementById('banModal');
+        var userNameElement = document.getElementById('banUserName');
+        var form = document.getElementById('banForm');
+        var banNoteElement = document.getElementById('banNote');
+        
+        if (!modal) {
+            console.error('Modal element not found!');
+            alert('Error: Modal element not found!');
+            return;
+        }
+        if (!userNameElement) {
+            console.error('banUserName element not found!');
+            return;
+        }
+        if (!form) {
+            console.error('banForm element not found!');
+            alert('Error: Form element not found!');
+            return;
+        }
+        
+        userNameElement.textContent = userName;
+        form.action = '/admin/users/ban/' + userId;
+        if (banNoteElement) {
+            banNoteElement.value = '';
+        }
+        
+        // Use setTimeout to prevent immediate closing
+        setTimeout(function() {
+            modal.style.display = 'flex';
+            console.log('Modal displayed successfully, action set to:', form.action);
+        }, 10);
+        
+    } catch (error) {
+        console.error('Error in showBanModal:', error);
+        alert('Error showing ban modal: ' + error.message);
+    }
+}
+
+function closeBanModal() {
+    console.log('closeBanModal called');
+    var modal = document.getElementById('banModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function unbanUser(userId) {
+    console.log('unbanUser called with userId:', userId);
+    if (confirm('Are you sure you want to unban this user?')) {
+        try {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/admin/users/unban/' + userId;
+            
+            console.log('Unban form action:', form.action);
+            
+            document.body.appendChild(form);
+            console.log('Submitting unban form...');
+            form.submit();
+        } catch (error) {
+            console.error('Error in unbanUser:', error);
+            alert('Error unbanning user: ' + error.message);
+        }
+    }
+}
+
+// Close modal when clicking outside (but not on the modal content)
+window.addEventListener('click', function(event) {
+    var modal = document.getElementById('banModal');
+    var modalDialog = document.querySelector('#banModal .modal-dialog');
+    
+    // Only close if clicking on the dark overlay, not on modal content
+    if (event.target === modal && !modalDialog.contains(event.target)) {
+        console.log('Closing modal - clicked outside');
+        closeBanModal();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeBanModal();
+    }
+});
+</script>
 
 <%@ include file="shared/footer.jsp" %>
 

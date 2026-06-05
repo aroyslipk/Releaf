@@ -25,117 +25,18 @@ body {
     line-height: 1.5;
 }
 
-/* Modern Header */
-.user-header {
-    background: linear-gradient(to right, var(--bg-dark), var(--bg-darker));
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: var(--shadow-lg);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--border-light);
-}
+/* ===== HEADER STYLES REMOVED =====
+ * All header styling is now controlled by:
+ *   - inline styles in common/user-header.jsp
+ *   - modern-admin.css (with !important flags)
+ * This ensures Dashboard, Tasks, Achievements, Groups, and all other pages have identical headers.
+ * The dark-theme header rules that were here conflicted with the light header.
+ * Only non-header styles remain below (cards, stats, welcome banner, etc.)
+ */
 
-/* Logo Styles */
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.logo {
-    height: 2.5rem;
-    width: 2.5rem;
-    border-radius: 50%;
-    border: 2px solid var(--primary-green);
-    padding: 2px;
-    background: white;
-}
-
-.logo-text {
-    font-size: 1.5rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--primary-green), var(--light-green));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
-}
-
-/* Navigation */
-.main-nav {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.nav-link {
-    color: var(--text-light);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    position: relative;
-}
-
-.nav-link:hover {
-    color: var(--text-white);
-    background: var(--nav-active);
-    transform: translateY(-1px);
-}
-
-.nav-link.active {
-    color: var(--text-white);
-    background: var(--primary-green);
-    box-shadow: 0 0 20px rgba(52, 211, 153, 0.2);
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 25%;
-    width: 50%;
-    height: 2px;
-    background: var(--light-green);
-    border-radius: 2px;
-}
-
-/* User Menu */
-.user-menu {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-    border: 1px solid var(--border-light);
-    backdrop-filter: blur(10px);
-}
-
-.username {
-    color: var(--text-white);
-    font-weight: 600;
-}
-
-.xp-points {
-    background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
-    color: var(--text-white);
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
+/* REMOVED: .user-header, .logo-container, .logo, .logo-text */
+/* REMOVED: .main-nav, .nav-link, .nav-link:hover, .nav-link.active */
+/* REMOVED: .user-menu, .user-info, .username, .xp-points */
 
 /* Profile Dropdown */
 .profile-dropdown {
