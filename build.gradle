@@ -8,13 +8,12 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    // Use Gradle Java toolchain to request Java 25 for compilation and runtime
+    // Use Java 21 for better compatibility with deployment platforms
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(21)
     }
-    // Keep explicit source/target compatibility for tools that read it
-    sourceCompatibility = '25'
-    targetCompatibility = '25'
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
 }
 
 repositories {
