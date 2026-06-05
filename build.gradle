@@ -58,3 +58,8 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+// Disable the plain JAR to avoid conflicts with the Spring Boot executable JAR
+jar {
+	enabled = false
+}
+
