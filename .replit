@@ -5,8 +5,9 @@ modules = ["java-graalvm22.3", "web", "nodejs-20", "bash"]
 channel = "stable-25_05"
 
 [deployment]
-run = ["sh", "-c", "java -Dserver.port=5000 -jar build/libs/*.jar"]
-build = ["sh", "-c", "chmod +x gradlew && ./gradlew clean build -x test"]
+run = ["bash", "-c", "java -Dserver.port=5000 -jar build/libs/*.jar"]
+build = ["bash", "-c", "gradle build -x test --no-daemon"]
+deploymentTarget = "autoscale"
 
 [[ports]]
 localPort = 5000
