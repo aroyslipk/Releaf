@@ -32,16 +32,16 @@ public class UserTopicProgressService {
     @Autowired
     private TaskRepository taskRepository;
 
-    // Define the topic order
+    // Define the topic order — must match task topic names in the database
     private static final List<String> TOPIC_ORDER = List.of(
-        "Plastronauts",
-        "Aether Shield", 
-        "Hydronauts",
-        "ChronoClimbers",
-        "Verdantra",
-        "TerraFixers",
-        "SmogSmiths",
-        "EcoMentors"
+        "Energy Conservation",
+        "Water Conservation",
+        "Waste Reduction",
+        "Sustainable Transport",
+        "Sustainable Food",
+        "Clean Energy",
+        "Air Quality",
+        "Community Action"
     );
 
     // Unlocking requirements
@@ -59,8 +59,18 @@ public class UserTopicProgressService {
         
         // Check if user already has progress initialized
         List<UserTopicProgress> existingProgress = userTopicProgressRepository.findByUserIdOrderByTopicOrder(userId);
+        
+        // Detect stale/mismatched topic names and wipe them so we re-initialize
         if (!existingProgress.isEmpty()) {
-            return; // Already initialized
+            boolean mismatch = existingProgress.stream()
+                .anyMatch(p -> !TOPIC_ORDER.contains(p.getTopic()));
+            if (!mismatch) {
+                return; // Already initialized with correct topics
+            }
+            // Delete stale records so we can re-initialize with correct topic names
+            for (UserTopicProgress old : existingProgress) {
+                userTopicProgressRepository.deleteById(old.getId());
+            }
         }
 
         // Initialize progress for all topics

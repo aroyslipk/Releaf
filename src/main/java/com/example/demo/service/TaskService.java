@@ -36,7 +36,16 @@ public class TaskService {
         new String[]{"Sustainable Transport", "Hard", "Organise a carpool arrangement with colleagues or neighbours"},
         new String[]{"Sustainable Food", "Easy", "Have one meat-free meal today"},
         new String[]{"Sustainable Food", "Medium", "Buy only locally grown produce for one week"},
-        new String[]{"Sustainable Food", "Hard", "Grow your own vegetables or herbs for one month"}
+        new String[]{"Sustainable Food", "Hard", "Grow your own vegetables or herbs for one month"},
+        new String[]{"Clean Energy", "Easy", "Unplug chargers and electronics when not in use"},
+        new String[]{"Clean Energy", "Medium", "Switch to a renewable energy plan with your electricity provider"},
+        new String[]{"Clean Energy", "Hard", "Install solar panels or a solar water heater at home"},
+        new String[]{"Air Quality", "Easy", "Avoid burning rubbish or leaves — dispose of waste properly"},
+        new String[]{"Air Quality", "Medium", "Plant at least 3 air-purifying plants indoors or in your garden"},
+        new String[]{"Air Quality", "Hard", "Organise a local clean-air awareness event or tree-planting drive"},
+        new String[]{"Community Action", "Easy", "Share one environmental tip with a friend or family member"},
+        new String[]{"Community Action", "Medium", "Participate in a local clean-up or green community event"},
+        new String[]{"Community Action", "Hard", "Start or join a sustainability initiative in your neighbourhood or workplace"}
     );
 
     public List<Task> getAllTasks() {
@@ -128,10 +137,12 @@ public class TaskService {
     }
 
     public void initializeDefaultTasks() {
-        long count = taskRepository.countByTaskType("GREENVERSE");
-        if (count == 0) {
-            for (String[] taskData : DEFAULT_TASKS) {
-                Task task = new Task(taskData[0], taskData[1], taskData[2]);
+        for (String[] taskData : DEFAULT_TASKS) {
+            String topic = taskData[0];
+            String level = taskData[1];
+            long count = taskRepository.countByTopicAndLevelAndTaskType(topic, level, "GREENVERSE");
+            if (count == 0) {
+                Task task = new Task(topic, level, taskData[2]);
                 task.setTaskType("GREENVERSE");
                 task.setCategory("GREENVERSE");
                 taskRepository.save(task);
