@@ -34,14 +34,14 @@ public class UserTopicProgressService {
 
     // Define the topic order — must match task topic names in the database
     private static final List<String> TOPIC_ORDER = List.of(
-        "Energy Conservation",
-        "Water Conservation",
-        "Waste Reduction",
-        "Sustainable Transport",
-        "Sustainable Food",
-        "Clean Energy",
-        "Air Quality",
-        "Community Action"
+        "Plastronauts",
+        "Aether Shield",
+        "Hydronauts",
+        "ChronoClimbers",
+        "Terra Guardians",
+        "Eco Warriors",
+        "Green Chefs",
+        "Wildlife Defenders"
     );
 
     // Unlocking requirements
