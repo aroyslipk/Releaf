@@ -37,14 +37,15 @@
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 1.5rem 3rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 900;
             background: linear-gradient(135deg, #10b981, #059669);
             -webkit-background-clip: text;
@@ -56,15 +57,16 @@
 
         .nav-links {
             display: flex;
-            gap: 3rem;
+            gap: 2rem;
             list-style: none;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
             color: #374151;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: color 0.3s;
         }
 
@@ -72,15 +74,30 @@
             color: #10b981;
         }
 
+        /* Mobile hamburger button */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #374151;
+            padding: 4px;
+            line-height: 1;
+            z-index: 1001;
+        }
+
         .cta-btn {
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
-            padding: 0.9rem 2rem;
+            padding: 0.8rem 1.8rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
+            font-size: 0.9rem;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
             transition: all 0.3s;
+            white-space: nowrap;
         }
 
         .cta-btn:hover {
@@ -451,48 +468,290 @@
             font-size: 1rem;
         }
 
-        /* Responsive */
+        /* ============================================
+           FULL RESPONSIVE BREAKPOINTS
+           ============================================ */
+
         @media (max-width: 1024px) {
+            .nav-container {
+                padding: 1rem 1.5rem;
+            }
             .hero-content {
                 grid-template-columns: 1fr;
-                gap: 3rem;
+                gap: 2rem;
             }
-
+            .hero-text h1 {
+                font-size: 3.2rem;
+            }
+            .hero-text p {
+                font-size: 1.1rem;
+            }
             .features-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
             .steps-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .features {
+                padding: 4rem 2rem;
+            }
+            .how-it-works {
+                padding: 4rem 2rem;
+            }
+            .cta-section {
+                padding: 4rem 2rem;
+            }
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+            .hero-content {
+                padding: 0 1.5rem;
+            }
+            .hero {
+                padding-top: 80px;
+            }
+            .hero-card {
+                padding: 2rem;
+            }
+            .stats-row {
+                gap: 1rem;
             }
         }
 
         @media (max-width: 768px) {
+            /* Mobile nav */
+            nav {
+                padding: 0;
+            }
+            .nav-container {
+                padding: 0.75rem 1rem;
+            }
+            .logo {
+                font-size: 1.3rem;
+            }
             .nav-links {
                 display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.99);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                gap: 0.5rem;
+                z-index: 999;
             }
-
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-links a {
+                padding: 12px 16px;
+                display: block;
+                text-align: center;
+                border-radius: 10px;
+                font-size: 1rem;
+            }
+            .nav-links a:hover {
+                background: #f0fdf4;
+            }
+            .nav-links .cta-mobile {
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: white !important;
+                border-radius: 50px;
+                margin-top: 8px;
+            }
+            .hamburger-btn {
+                display: block;
+            }
+            .desktop-cta {
+                display: none;
+            }
+            /* Hero */
+            .hero {
+                min-height: auto;
+                padding: 100px 1rem 4rem;
+            }
             .hero-text h1 {
-                font-size: 3rem;
+                font-size: 2.2rem;
+                line-height: 1.2;
             }
-
-            .features-grid,
-            .steps-grid {
-                grid-template-columns: 1fr;
+            .hero-text p {
+                font-size: 1rem;
+                line-height: 1.5;
             }
-
-            .section-header h2 {
-                font-size: 2.5rem;
-            }
-
             .hero-buttons {
                 flex-direction: column;
+                gap: 1rem;
             }
-
             .btn-primary,
             .btn-secondary {
                 width: 100%;
                 justify-content: center;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+            .hero-content {
+                padding: 0;
+                gap: 2rem;
+            }
+            .hero-card {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+            .hero-card-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+            .hero-card h3 {
+                font-size: 1.4rem;
+            }
+            .hero-card p {
+                font-size: 0.9rem;
+            }
+            .stat-box h4 {
+                font-size: 1.8rem;
+            }
+            .stat-box p {
+                font-size: 0.75rem;
+            }
+            .stat-box {
+                padding: 1rem;
+            }
+            .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.75rem;
+            }
+            /* Features */
+            .features {
+                padding: 3rem 1rem;
+            }
+            .section-header {
+                margin-bottom: 2rem;
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .section-header p {
+                font-size: 1rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .feature-box {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+            .feature-icon {
+                font-size: 2.5rem;
+                margin-bottom: 0.75rem;
+            }
+            .feature-box h3 {
+                font-size: 1.2rem;
+            }
+            .feature-box p {
+                font-size: 0.9rem;
+            }
+            /* Steps */
+            .how-it-works {
+                padding: 3rem 1rem;
+            }
+            .steps-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+            .step-box {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+            .step-number {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+                top: -15px;
+            }
+            .step-icon {
+                font-size: 2rem;
+                margin: 1.5rem 0 1rem;
+            }
+            .step-box h3 {
+                font-size: 1.1rem;
+            }
+            .step-box p {
+                font-size: 0.85rem;
+            }
+            /* CTA */
+            .cta-section {
+                padding: 3rem 1rem;
+            }
+            .cta-content h2 {
+                font-size: 2rem;
+            }
+            .cta-content p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            .cta-content .btn-primary {
+                font-size: 1rem;
+                padding: 1rem 2rem;
+            }
+            /* Footer */
+            footer {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 1.8rem;
+            }
+            .hero-text p {
+                font-size: 0.9rem;
+            }
+            .hero {
+                padding: 90px 0.75rem 3rem;
+            }
+            .hero-card {
+                padding: 1.25rem;
+            }
+            .stats-row {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
+            .stat-box h4 {
+                font-size: 1.5rem;
+            }
+            .stat-box p {
+                font-size: 0.7rem;
+            }
+            .stat-box {
+                padding: 0.75rem;
+            }
+            .section-header h2 {
+                font-size: 1.6rem;
+            }
+            .section-header p {
+                font-size: 0.85rem;
+            }
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+            .feature-box {
+                padding: 1.25rem;
+            }
+            .cta-content h2 {
+                font-size: 1.6rem;
+            }
+            .cta-content p {
+                font-size: 0.9rem;
+            }
+            .btn-primary,
+            .btn-secondary {
+                padding: 0.9rem 1.5rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -504,12 +763,14 @@
             <div class="logo">
                 🌱 Releaf
             </div>
-            <ul class="nav-links">
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">☰</button>
+            <ul class="nav-links" id="mobileNavLinks">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="#join">Join Now</a></li>
+                <li><a href="${pageContext.request.contextPath}/login" class="cta-mobile">Get Started</a></li>
             </ul>
-            <a href="${pageContext.request.contextPath}/login" class="cta-btn">Get Started</a>
+            <a href="${pageContext.request.contextPath}/login" class="cta-btn desktop-cta">Get Started</a>
         </div>
     </nav>
 
@@ -666,6 +927,38 @@
             } else {
                 nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.05)';
             }
+        });
+
+        // Mobile hamburger menu
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileNavLinks = document.getElementById('mobileNavLinks');
+        let menuOpen = false;
+
+        hamburgerBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            menuOpen = !menuOpen;
+            if (menuOpen) {
+                mobileNavLinks.classList.add('open');
+                hamburgerBtn.textContent = '✕';
+                hamburgerBtn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileNavLinks.classList.remove('open');
+                hamburgerBtn.textContent = '☰';
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when a link is clicked
+        mobileNavLinks.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                mobileNavLinks.classList.remove('open');
+                hamburgerBtn.textContent = '☰';
+                hamburgerBtn.setAttribute('aria-expanded', 'false');
+                menuOpen = false;
+                document.body.style.overflow = '';
+            });
         });
     </script>
 </body>

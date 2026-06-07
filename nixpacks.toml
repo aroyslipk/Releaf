@@ -1,8 +1,11 @@
-[phases.setup]
-nixPkgs = ['openjdk21', 'gradle']
+m[phases.setup]
+nixPkgs = ['jdk21']
+
+[phases.install]
+cmds = ['chmod +x gradlew']
 
 [phases.build]
-cmds = ['gradle clean build -x test --no-daemon']
+cmds = ['./gradlew clean build -x test']
 
 [start]
 cmd = 'java -Dserver.port=$PORT -Dspring.profiles.active=prod -jar build/libs/*.jar'

@@ -133,7 +133,8 @@ public class UserController {
                 return "redirect:/login";
             }
 
-            Optional<User> userOpt = userService.findById(userId);
+            // 🔧 FIX: Use findByIdWithCollections to eagerly load completedTasks, unlockedRewards, and group
+            Optional<User> userOpt = userService.findByIdWithCollections(userId);
             if (userOpt.isEmpty()) {
                 return "redirect:/login";
             }
@@ -141,8 +142,8 @@ public class UserController {
             User user = userOpt.get();
             model.addAttribute("user", user);
             model.addAttribute("completedTasksCount", userService.getCompletedTasksCount(userId));
-            model.addAttribute("userName", user.getName()); // Add this for session scope
-            session.setAttribute("userName", user.getName()); // Set in session
+            model.addAttribute("userName", user.getName());
+            session.setAttribute("userName", user.getName());
 
             List<Notice> notices = noticeService.getActiveNotices();
             if (notices != null) {
@@ -151,7 +152,8 @@ public class UserController {
                 model.addAttribute("notices", java.util.Collections.emptyList());
             }
 
-            // Add default values for properties that might be null
+            // 🔧 FIX: Ensure xpPoints is never null before passing to rewardService
+            int xpPoints = (user.getXpPoints() != null) ? user.getXpPoints() : 0;
             if (user.getXpPoints() == null) {
                 user.setXpPoints(0);
             }
@@ -159,10 +161,10 @@ public class UserController {
                 user.setUnlockedRewards(new java.util.HashSet<>());
             }
 
-            // Add reward level information
-            String currentRewardLevel = rewardService.getCurrentRewardLevel(user.getXpPoints());
-            Integer nextRewardXP = rewardService.getNextRewardXP(user.getXpPoints());
-            Integer currentLevelXP = rewardService.getCurrentLevelXP(user.getXpPoints());
+            // Add reward level information (safe even with 0 XP)
+            String currentRewardLevel = rewardService.getCurrentRewardLevel(xpPoints);
+            Integer nextRewardXP = rewardService.getNextRewardXP(xpPoints);
+            Integer currentLevelXP = rewardService.getCurrentLevelXP(xpPoints);
             
             model.addAttribute("currentRewardLevel", currentRewardLevel);
             model.addAttribute("nextRewardXP", nextRewardXP);
@@ -170,9 +172,8 @@ public class UserController {
 
             return "user/dashboard";
         } catch (Exception e) {
-            // Log the error
             e.printStackTrace();
-            model.addAttribute("error", "An unexpected error occurred. Please try again later.");
+            model.addAttribute("error", "Dashboard error: " + e.getMessage());
             return "error";
         }
     }
@@ -494,24 +495,30 @@ public String greenverse(@RequestParam(required = false) String view, HttpSessio
         try {
             Long userId = (Long) session.getAttribute("userId");
             if (userId == null) {
-                // User is not logged in, redirect them
                 return "redirect:/login";
             }
 
-            Optional<User> userOpt = userService.findById(userId);
+            // 🔧 FIX: Use findByIdWithCollections to eagerly load all collections
+            Optional<User> userOpt = userService.findByIdWithCollections(userId);
             if (userOpt.isEmpty()) {
                 model.addAttribute("error", "User not found");
                 return "redirect:/login";
             }
 
             User user = userOpt.get();
+            
+            // 🔧 FIX: Null-safety for all fields
+            if (user.getXpPoints() == null) user.setXpPoints(0);
+            if (user.getUnlockedRewards() == null) user.setUnlockedRewards(new java.util.HashSet<>());
+            if (user.getCompletedTasks() == null) user.setCompletedTasks(new java.util.HashSet<>());
+            
             model.addAttribute("user", user);
             model.addAttribute("completedTasksCount", userService.getCompletedTasksCount(userId));
             
             return "user/profile";
         } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("error", "An unexpected error occurred. Please try again later.");
+            model.addAttribute("error", "Profile error: " + e.getMessage());
             return "error";
         }
     }
