@@ -11,3 +11,30 @@ build = ["sh", "-c", "chmod +x gradlew && ./gradlew clean build -x test"]
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "gradle build -x test --no-daemon && java -Dserver.port=5000 -jar build/libs/*.jar"
+waitForPort = 5000

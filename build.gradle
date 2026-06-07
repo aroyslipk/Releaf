@@ -8,16 +8,12 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    // Use Java 21 for better compatibility with deployment platforms
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-    sourceCompatibility = '21'
-    targetCompatibility = '21'
+    sourceCompatibility = '19'
+    targetCompatibility = '19'
 }
 
 repositories {
-	mavenCentral()
+        mavenCentral()
 }
 
 dependencies {
@@ -55,11 +51,11 @@ dependencies {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+        useJUnitPlatform()
 }
 
 // Disable the plain JAR to avoid conflicts with the Spring Boot executable JAR
 jar {
-	enabled = false
+        enabled = false
 }
 

@@ -66,4 +66,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     
     @Query("SELECT COUNT(ut) FROM UserTask ut WHERE ut.user.id = :userId AND ut.status = 'PENDING_REVIEW'")
     int countActiveTasksByUserId(@Param("userId") Long userId);
+
+    long countByTaskType(String taskType);
 }
