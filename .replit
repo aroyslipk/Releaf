@@ -1,8 +1,8 @@
 run = "java -Dserver.port=5000 -jar build/libs/*.jar"
-modules = ["java-graalvm25"]
+modules = ["java-graalvm22.3", "web", "nodejs-20", "bash"]
 
 [nix]
-channel = "stable-24_05"
+channel = "stable-25_05"
 
 [deployment]
 run = ["sh", "-c", "java -Dserver.port=5000 -jar build/libs/*.jar"]
